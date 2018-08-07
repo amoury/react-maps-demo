@@ -1,47 +1,13 @@
-import React, { Component } from "react";
-import GoogleMapReact from "google-map-react";
-import { Icon } from "semantic-ui-react";
+import React from 'react';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const MegaMap = () =>
+  <GoogleMap
+    defaultZoom={8}
+    defaultCenter={{ lat: -34.397, lng: 150.644 }}
+  >
+    {<Marker position={{ lat: -34.397, lng: 150.644 }} />}
+  </GoogleMap>
 
-class MegaMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
 
-  render() {
-    return (
-      <div style={{ height: "100vh", width: "100%" }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBrtQTf_1K6cTuUxdL_tukzuig5ph84KNQ" }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <Icon
-            name="map marker alternate"
-            lat={59.955413}
-            lng={30.337844}
-            size="large"
-          />
-          <Icon
-            name="map marker alternate"
-            lat={59.955413}
-            lng={30.557844}
-            size="large"
-          />
-          {/* <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text={"Kreyser Avrora"}
-          /> */}
-        </GoogleMapReact>
-      </div>
-    );
-  }
-}
-
-export default MegaMap;
+export default withScriptjs(withGoogleMap(MegaMap));
