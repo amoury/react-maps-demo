@@ -42,6 +42,11 @@ class HomePage extends Component {
   componentDidMount = () => {
     let currentCoords = this.getUserCoordinates();
     this.setState({userCoords: currentCoords});
+
+    setTimeout(() => { 
+      if(!google) return;
+      if(google) return this.getUserDistance();
+    }, 8000);
   }
 
   getUserCoordinates = () => {
@@ -56,17 +61,18 @@ class HomePage extends Component {
 
   getUserDistance = () => {
     if(!this.state.userCoords) return null;
-    const { lat: lat0, lng: lng0 } = this.state.spaces[0].coords;
-    const { lat: lat1, lng: lng1 } = this.state.spaces[1].coords;
-    
-    const origin = new google.maps.LatLng(this.state.userCoords.lat, this.state.userCoords.lng);
-    const destination0 = new google.maps.LatLng(lat0, lng0);
-    const destination1 = new google.maps.LatLng(lat1, lng1);
+    console.log('Getting Distance Now');
+
+    const { lat: userLat, lng: userLng } = this.state.userCoords;
+    const destinationCoords = this.state.spaces.map(space => new google.maps.LatLng(space.coords.lat, space.coords.lng));
+
+    const origin = new google.maps.LatLng(userLat, userLng);
     const matrix = new google.maps.DistanceMatrixService();
-   
+
+
     matrix.getDistanceMatrix({
       origins: [origin],
-      destinations: [destination0, destination1],
+      destinations: [...destinationCoords],
       travelMode: 'DRIVING'
     },
     this.renderDetails)
@@ -74,10 +80,13 @@ class HomePage extends Component {
 
   renderDetails = (res, status) => {
     if (status === "OK") {
-      console.log(res.rows);
-      this.setState({
-        distanceData: res.rows[0].elements
+      let _spaces = [...this.state.spaces]; 
+      let distanceData = res.rows[0].elements;
+      
+      distanceData.forEach( (data, index) => {
+        _spaces[index].distanceData = data;
       });
+      this.setState({ spaces: _spaces });
       return;
     }
     console.log(status);
@@ -102,8 +111,7 @@ class HomePage extends Component {
             <CardList 
               _handleImageClick={this.onCardImageClick} 
               spaces={this.state.spaces} 
-              selectedCard = {this.state.selectedCardId}
-              getUserDistance = {this.getUserDistance}  
+              selectedCard={this.state.selectedCardId}
             />
           }
           right={<MegaMap _isOpen={this.state.isOpen} spaces={this.state.spaces} selectedCard={this.state.selectedCardId}/>}

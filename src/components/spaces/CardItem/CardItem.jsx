@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Icon, Image } from "semantic-ui-react";
+import { Card, Icon, Image, Divider } from "semantic-ui-react";
 import Tag from "../../../layout/Tag/Tag";
 
 const CardItem = (props) => {
@@ -10,10 +10,13 @@ const CardItem = (props) => {
       <Image src="https://source.unsplash.com/random/300x200" onClick={() => _handleImageClick(space.id)}/>
       <Card.Content>
         <Card.Header>{space.name}</Card.Header>
-        <Card.Meta>
-          <Icon name="location arrow" size="small" />{" "}
-          5 km from your current location
-        </Card.Meta>
+        { space.distanceData && 
+          <Card.Meta>
+            <Icon name="location arrow" size="small" />{" "}
+            {space.distanceData.distance.text} away | {space.distanceData.duration.text} by car
+          </Card.Meta>
+        }
+        <Divider/>
         <Card.Description>
           {space.description}
         </Card.Description>
