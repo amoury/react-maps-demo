@@ -23,8 +23,6 @@ class Marker extends Component {
           trigger={<Icon name="map marker alternate" size="big" color="teal" />}
           content={this.props.text}
           inverted
-          open={this.props.open}
-          on="click"
         />
       </div>
     );

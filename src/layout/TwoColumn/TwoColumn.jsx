@@ -1,11 +1,10 @@
 import React, {Fragment} from 'react';
 import { Grid } from 'semantic-ui-react';
-import Navigation from '../Navigation/Navigation';
 
 const TwoColumn = ({ left, right }) => {
   return (
     <Fragment>
-      <Navigation />
+      
         <Grid>
           <Grid.Column width={10}>
             <div style={{ paddingLeft: '10px'}}>

@@ -1,13 +1,13 @@
 import React from "react";
-import { Card, Icon, Image, Divider } from "semantic-ui-react";
+import { Card, Icon, Image, Divider, Button } from "semantic-ui-react";
 import Tag from "../../../layout/Tag/Tag";
 
 const CardItem = (props) => {
-  const { color, raised, space, _handleImageClick } = props;
+  const { space } = props;
 
   return (
-    <Card color={color} raised={raised}>
-      <Image src="https://source.unsplash.com/random/300x200" onClick={() => _handleImageClick(space.id)}/>
+    <Card>
+      <Image src={`${space.mainImage}300x200`} />
       <Card.Content>
         <Card.Header>{space.name}</Card.Header>
         { space.distanceData && 
@@ -25,6 +25,9 @@ const CardItem = (props) => {
         { space.tags.map(tag => {
           return <Tag key={tag} tag={tag}/>
         })}
+      </Card.Content>
+      <Card.Content extra>
+        <Button>Details</Button>
       </Card.Content>
     </Card>
   );

@@ -40,11 +40,9 @@ class TrialMap extends Component {
       return (
         <Marker
           key={id}
-          selectedCard={this.props.selectedCard}
           lat={coords.lat}
           lng={coords.lng}
           text={name}
-          open={ id === this.props.selectedCard ? true : false }
           hover={this.props.hoverKey === id}
         />
       );

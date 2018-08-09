@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from 'react-router-dom';
 import { Input, Menu } from "semantic-ui-react";
 
 class Navigation extends Component {
@@ -7,24 +8,18 @@ class Navigation extends Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {
-    const { activeItem } = this.state;
 
     return (
       <Menu secondary style={{ padding: '10px 30px'}}>
         <Menu.Item
+          as={NavLink}
+          exact
+          to="/"
           name="home"
-          active={activeItem === "home"}
-          onClick={this.handleItemClick}
         />
-        <Menu.Item
-          name="messages"
-          active={activeItem === "messages"}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name="friends"
-          active={activeItem === "friends"}
-          onClick={this.handleItemClick}
+        <Menu.Item as={NavLink} 
+          to="/about" 
+          name="about"
         />
         <Menu.Menu position="right">
           <Menu.Item>
@@ -32,8 +27,6 @@ class Navigation extends Component {
           </Menu.Item>
           <Menu.Item
             name="logout"
-            active={activeItem === "logout"}
-            onClick={this.handleItemClick}
           />
         </Menu.Menu>
       </Menu>
