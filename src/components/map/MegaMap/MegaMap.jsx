@@ -49,7 +49,7 @@ class TrialMap extends Component {
     });
 
     return (
-      <div style={{ height: "110vh", width: "100%" }}>
+      <div style={{ height: "100vh", width: "100%"}}>
         <GoogleMap
           bootstrapURLKeys={{
             key: "AIzaSyBH8UsljlMRkbUNYkY1j4iOOem07wv9rbQ",

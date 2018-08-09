@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, Icon, Image, Divider, Button } from "semantic-ui-react";
+import { Link } from 'react-router-dom';
 import Tag from "../../../layout/Tag/Tag";
 
 const CardItem = (props) => {
@@ -27,7 +28,7 @@ const CardItem = (props) => {
         })}
       </Card.Content>
       <Card.Content extra>
-        <Button>Details</Button>
+        <Button as={Link} to={`/spaces/${space.id}`}>Details</Button>
       </Card.Content>
     </Card>
   );

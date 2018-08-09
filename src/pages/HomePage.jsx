@@ -85,10 +85,16 @@ class HomePage extends Component {
     if (status === "OK") {
       let _spaces = [...this.state.spaces];
       let distanceData = res.rows[0].elements;
+      let addressData = res.destinationAddresses;
 
       distanceData.forEach((data, index) => {
         _spaces[index].distanceData = data;
       });
+
+      addressData.forEach((data, index) => {
+        _spaces[index].addressData = data;
+      })
+
       this.setState({ spaces: _spaces, gotDistance: true });
       return;
     }

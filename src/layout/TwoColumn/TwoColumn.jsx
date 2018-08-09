@@ -1,11 +1,12 @@
 import React, {Fragment} from 'react';
 import { Grid } from 'semantic-ui-react';
 
-const TwoColumn = ({ left, right }) => {
+const TwoColumn = ({ top, left, right }) => {
   return (
     <Fragment>
-      
-        <Grid>
+        { top }
+        
+        <Grid stackable>
           <Grid.Column width={10}>
             <div style={{ paddingLeft: '10px'}}>
               { left }
