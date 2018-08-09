@@ -3,6 +3,7 @@ import { Card, Button } from "semantic-ui-react";
 import CardItem from "../CardItem/CardItem";
 
 const CardList = props => {
+
   const selectedCardId = props.selectedCard;
 
   const cards = props.spaces.map(space => {
@@ -12,7 +13,7 @@ const CardList = props => {
         space={space}
         _handleImageClick={props._handleImageClick}
         raised={true}
-        color='red'
+        color="red"
       />
     ) : (
       <CardItem
@@ -26,7 +27,7 @@ const CardList = props => {
   return (
     <Card.Group itemsPerRow={3}>
       {cards}
-      <Button onClick={props._handlePopup}>Open Popup</Button>
+      <Button onClick={props.getUserDistance}>Click</Button>
     </Card.Group>
   );
 };

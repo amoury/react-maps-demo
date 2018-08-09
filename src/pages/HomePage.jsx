@@ -1,7 +1,5 @@
 /* global google */
 import React, { Component, Fragment } from 'react';
-import Script from 'react-load-script';
-import axios from 'axios';
 import TwoColumn from '../layout/TwoColumn/TwoColumn';
 import CardList from '../components/spaces/CardList/CardList';
 import MegaMap from '../components/map/MegaMap/MegaMap';
@@ -42,16 +40,8 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
-    
     let currentCoords = this.getUserCoordinates();
     this.setState({userCoords: currentCoords});
-
-    if(this.state.userCoords) { this.getUserDistance(); }
-    
-
-    // this.setState({userCoords});
-
-    // axios.get("https://maps.googleapis.com/maps/api/distancematrix/json?origins=25.0359,55.1816&destinations=25.2028,55.2760&key=AIzaSyBH8UsljlMRkbUNYkY1j4iOOem07wv9rbQ");
   }
 
   getUserCoordinates = () => {
@@ -66,31 +56,31 @@ class HomePage extends Component {
 
   getUserDistance = () => {
     if(!this.state.userCoords) return null;
-    // const { lat, lng } = this.state.userCoords;
-    const { lat, lng } = this.state.spaces[0].coords;
-
+    const { lat: lat0, lng: lng0 } = this.state.spaces[0].coords;
+    const { lat: lat1, lng: lng1 } = this.state.spaces[1].coords;
+    
     const origin = new google.maps.LatLng(this.state.userCoords.lat, this.state.userCoords.lng);
-    const destination = new google.maps.LatLng(lat, lng);
+    const destination0 = new google.maps.LatLng(lat0, lng0);
+    const destination1 = new google.maps.LatLng(lat1, lng1);
     const matrix = new google.maps.DistanceMatrixService();
-
+   
     matrix.getDistanceMatrix({
       origins: [origin],
-      destinations: [destination],
-      travelMode: google.maps.TravelMode.DRIVING
+      destinations: [destination0, destination1],
+      travelMode: 'DRIVING'
     },
-    this.renderDetails())
+    this.renderDetails)
   }
 
   renderDetails = (res, status) => {
-    if (status == "OK") {
+    if (status === "OK") {
+      console.log(res.rows);
       this.setState({
-        origin: res.originAddresses[0],
-        destination: res.destinationAddresses[0],
-        distance: res.rows[0].elements[0].distance.text
+        distanceData: res.rows[0].elements
       });
-    } else {
-      console.log(status);
+      return;
     }
+    console.log(status);
   }
 
 
@@ -110,10 +100,10 @@ class HomePage extends Component {
         <TwoColumn
           left={
             <CardList 
-              _handlePopup={this.handlePopup} 
               _handleImageClick={this.onCardImageClick} 
               spaces={this.state.spaces} 
-              selectedCard = {this.state.selectedCardId}  
+              selectedCard = {this.state.selectedCardId}
+              getUserDistance = {this.getUserDistance}  
             />
           }
           right={<MegaMap _isOpen={this.state.isOpen} spaces={this.state.spaces} selectedCard={this.state.selectedCardId}/>}
