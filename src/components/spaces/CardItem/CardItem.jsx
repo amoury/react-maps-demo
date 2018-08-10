@@ -2,13 +2,15 @@ import React from "react";
 import { Card, Icon, Image, Divider, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import Tag from "../../../layout/Tag/Tag";
+import backupImg from "../../../assets/images/social-cut.jpg";
 
 const CardItem = (props) => {
   const { space } = props;
+  const spaceImg = navigator.onLine ? `${space.mainImage}300x200` : backupImg; 
 
   return (
     <Card>
-      <Image src={`${space.mainImage}300x200`} />
+      <Image src={ spaceImg } />
       <Card.Content>
         <Card.Header>{space.name}</Card.Header>
         { space.distanceData && 

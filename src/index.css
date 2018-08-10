@@ -10,3 +10,9 @@ h2.ui.header.segment_header {
   font-size: 0.9em;
   letter-spacing: 0.07em;
 }
+
+.custom_icon {
+  max-width: 70px;
+  margin: auto;
+  display: block;
+}
