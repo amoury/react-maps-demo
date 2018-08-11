@@ -3,7 +3,7 @@ import { Container } from "semantic-ui-react";
 import Jumbotron from "../layout/Jumbotron/Jumbotron";
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import SingleSpaceInfo from "../components/spaces/SingleSpaceInfo";
-import SingleSpaceForm from "../components/spaces/SingleSpaceForm/SingleSpaceForm";
+import SingleSpaceContact from "../components/spaces/SingleSpaceContact";
 
 class SingleSpacePage extends Component {
   render() {
@@ -13,7 +13,7 @@ class SingleSpacePage extends Component {
         <Container>
           <TwoColumn
             left={<SingleSpaceInfo />}
-            right={<SingleSpaceForm />}
+            right={<SingleSpaceContact />}
           />
         </Container>
       </div>

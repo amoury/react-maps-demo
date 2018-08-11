@@ -3,6 +3,7 @@ import React, { Component, Fragment } from "react";
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
 import MegaMap from "../components/map/MegaMap/MegaMap";
+// import TwoColumnSticky from '../layout/TwoColumn/TwoColumnSticky';
 
 const spaces = [
   {
@@ -92,7 +93,7 @@ class HomePage extends Component {
       });
 
       addressData.forEach((data, index) => {
-        _spaces[index].addressData = data;
+        _spaces[index].address = data;
       })
 
       this.setState({ spaces: _spaces, gotDistance: true });

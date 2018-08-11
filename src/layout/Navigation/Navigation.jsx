@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { NavLink } from 'react-router-dom';
-import { Input, Menu } from "semantic-ui-react";
+import { NavLink, Link } from 'react-router-dom';
+import { Input, Menu, Button } from "semantic-ui-react";
 
 class Navigation extends Component {
   state = { activeItem: "home" };
@@ -28,6 +28,9 @@ class Navigation extends Component {
           <Menu.Item
             name="logout"
           />
+          <Button as={Link} to="spaces/add" color="teal">
+            List your space
+          </Button>
         </Menu.Menu>
       </Menu>
     );

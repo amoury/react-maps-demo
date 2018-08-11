@@ -11,13 +11,13 @@ const SpaceHighlights = () => {
       <div>
         <ul style={{ listStyle: "none" }}>
           <li>
-            <Icon name="caret right" color="teal" />
+            <Icon name="heart" color="teal" />
             Great Location - Since it is located in Jumeirah, it has direct
             connectivity from the metro station.
           </li>
 
           <li>
-            <Icon name="caret right" color="teal" />
+            <Icon name="heart" color="teal" />
             High Speed Wifi - Wifi speeds reaching upto 10GB
           </li>
         </ul>

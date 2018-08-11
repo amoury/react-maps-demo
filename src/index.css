@@ -16,3 +16,8 @@ h2.ui.header.segment_header {
   margin: auto;
   display: block;
 }
+
+.ui.button {
+  font-weight: 400 !important;
+  line-height: unset !important;
+}

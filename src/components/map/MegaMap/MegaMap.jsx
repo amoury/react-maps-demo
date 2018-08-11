@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import GoogleMap from "google-map-react";
 
-import Marker from "./Marker";
+import Marker from '../../../layout/Icons/Marker';
 
 class TrialMap extends Component {
   static propTypes = {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SingleSpaceForm = () => {
+const SingleSpaceEvents = () => {
   return (
     <div>
       <h1>Form</h1>
@@ -8,4 +8,4 @@ const SingleSpaceForm = () => {
   )
 }
 
-export default SingleSpaceForm
+export default SingleSpaceEvents
