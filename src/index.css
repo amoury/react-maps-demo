@@ -21,3 +21,8 @@ h2.ui.header.segment_header {
   font-weight: 400 !important;
   line-height: unset !important;
 }
+
+.ui.progress.form_progress_bar .bar {
+  height: 1em;
+  border-radius: 0;
+}

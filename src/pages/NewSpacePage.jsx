@@ -1,30 +1,109 @@
-import React, { Component, Fragment } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { Progress } from 'semantic-ui-react';
-import CenteredColumn from '../layout/CenteredColumn/CenteredColumn';
-import FormBasicInfo from '../components/spaces/AddSpaceForm/FormBasicInfo';
-import FormContactInfo from '../components/spaces/AddSpaceForm/FormContactInfo';
+import React, { Component, Fragment } from "react";
+import { Redirect } from "react-router-dom";
+import { Progress, Form } from "semantic-ui-react";
+import CenteredColumn from "../layout/CenteredColumn/CenteredColumn";
+import FormBasicInfo from "../components/spaces/AddSpaceForm/FormBasicInfo";
+import FormContactInfo from "../components/spaces/AddSpaceForm/FormContactInfo";
+import FormAmenitiesInfo from "../components/spaces/AddSpaceForm/FormAmenitiesInfo";
 
 class NewSpacePage extends Component {
-  state={
-    progress: 40
+  state = {
+    progress: 10,
+    space: {
+      name: "",
+      description: "",
+      contactInfo: {
+        email: "",
+        contactNumber: "",
+        siteLink: ""
+      }
+    }
+  };
+
+  componentDidMount = () => {
+    const { pathname } = this.props.location;
+    const baseUrl = '/spaces/add/'
+    switch (pathname) {
+      case `${baseUrl}basic-info`:
+        this.setState({ formStep: 1, progress: 10 });
+        break;
+      case `${baseUrl}contact-info`:
+        this.setState({ formStep: 2, progress: 20 });
+        break;
+      case `${baseUrl}amenities`:
+        this.setState({ formStep: 3, progress: 30 });
+        break;
+      default:
+        break;
+    }
   }
 
-  render () {
+  renderFormStep = (step) => {
+    const { name, description, contactInfo } = this.state.space;
+    switch(step) {
+      case 1:
+        return <FormBasicInfo next={this.handleProgressInc} back={this.handleProgressDec} space={{ name, description }} onInputChange={this.onInputChange} />;
+      case 2:
+        return <FormContactInfo next={this.handleProgressInc} back={this.handleProgressDec} space={{ contactInfo }} onObjectChange={this.onObjectChange} />;
+      case 3:
+        return <FormAmenitiesInfo next={this.handleProgressInc} back={this.handleProgressDec} />
+      default:
+        return;
+    }
+  }
+
+
+  handleProgressInc = () => {
+    if (this.state.progress >= 100 && this.state.formStep >= 10) return;
+    this.setState({ step: this.state.formStep++, progress: this.state.progress + 10 });
+  };
+
+  handleProgressDec = () => {
+    if (this.state.progress <= 10 && this.state.formStep <= 1) return;
+    this.setState({ step: this.state.formStep--, progress: this.state.progress - 10 });
+  };
+
+  onInputChange = event => {
+    const newSpace = this.state.space;
+    newSpace[event.target.name] = event.target.value;
+    this.setState({ space: newSpace })
+  }
+
+  onObjectChange = newObj => {
+    const _space = this.state.space;
+    _space[Object.keys(newObj)[0]] = Object.values(newObj)[0];
+    this.setState({ space: _space })
+
+    // console.log(Object.values(newObj)[0]);
+    
+  }
+
+  onFormSubmit = event => {
+    console.log(event);
+  }
+
+  render() {
     const { match, location } = this.props;
     let shouldRedirect = match.url === location.pathname;
 
     return (
       <Fragment>
-        <CenteredColumn top={ <Progress percent={this.state.progress} color='teal' /> }>
+        <CenteredColumn
+          top={
+            <Progress
+              className="form_progress_bar"
+              percent={this.state.progress}
+              color="teal"
+            />
+          }
+        >
+          {shouldRedirect && <Redirect to="/spaces/add/basic-info" />}
 
-          { shouldRedirect && <Redirect to="/spaces/add/basic-info" /> }
-          <Switch>
-            <Route path="/spaces/add/basic-info" component={FormBasicInfo} />
-            <Route path="/spaces/add/contact-info" component={FormContactInfo} />
-          </Switch>
+          <Form onSubmit={this.onFormSubmit}>
+            
+            { this.renderFormStep(this.state.formStep) }
           
-        
+          </Form>
         </CenteredColumn>
       </Fragment>
     );
