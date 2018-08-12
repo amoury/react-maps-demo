@@ -26,3 +26,7 @@ h2.ui.header.segment_header {
   height: 1em;
   border-radius: 0;
 }
+
+.amenities_box .field {
+  width: 50%;
+}

@@ -3,27 +3,21 @@ import { Form, Header, Segment, Divider, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class FormContactInfo extends Component {
-  state = {
-    contactInfo: {
-      email: "",
-      contactNumber: "",
-      siteLink: ""
-    },
-    socialInfo: {
-      facebook: "",
-      twitter: "",
-      instagram: ""
-    }
-  };
-
   onContactInfoUpdate = event => {
     const { contactInfo } = this.props.space;
     contactInfo[event.target.name] = event.target.value;
-    this.props.onObjectChange({contactInfo})
+    this.props.onObjectChange({ contactInfo });
+  };
+
+  onSocialLinksUpdate = event => {
+    const { socialLinks } = this.props.space;
+    socialLinks[event.target.name] = event.target.value;
+    this.props.onObjectChange({ socialLinks });
   };
 
   render() {
     const { email, contactNumber, siteLink } = this.props.space.contactInfo;
+    const { facebook, twitter, instagram } = this.props.space.contactInfo;
     return (
       <Segment.Group>
         <Segment attached="top">
@@ -38,7 +32,7 @@ class FormContactInfo extends Component {
               name="email"
               type="email"
               placeholder="Enter the official email address"
-              value={ email}
+              value={email}
               onChange={this.onContactInfoUpdate}
             />
           </Form.Field>
@@ -78,6 +72,8 @@ class FormContactInfo extends Component {
               name="facebook"
               type="text"
               placeholder="https://www.facebook.com/"
+              value={facebook}
+              onChange={this.onSocialLinksUpdate}
             />
           </Form.Field>
 
@@ -87,12 +83,14 @@ class FormContactInfo extends Component {
               name="twitter"
               type="text"
               placeholder="https://www.twitter.com/"
+              value={twitter}
+              onChange={this.onSocialLinksUpdate}
             />
           </Form.Field>
 
           <Form.Field>
             <label>Instagram Handle</label>
-            <input name="instagram" type="text" placeholder="@coworker" />
+            <input name="instagram" type="text" placeholder="@coworker" value={instagram} onChange={this.onSocialLinksUpdate}/>
           </Form.Field>
 
           <Button
