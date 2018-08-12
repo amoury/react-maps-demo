@@ -6,6 +6,7 @@ import FormBasicInfo from "../components/spaces/AddSpaceForm/FormBasicInfo";
 import FormContactInfo from "../components/spaces/AddSpaceForm/FormContactInfo";
 import FormAmenitiesInfo from "../components/spaces/AddSpaceForm/FormAmenitiesInfo";
 import FormLocationInfo from "../components/spaces/AddSpaceForm/FormLocationInfo";
+import TestForm from '../components/spaces/AddSpaceForm/TestForm';
 
 class NewSpacePage extends Component {
   state = {
@@ -86,10 +87,11 @@ class NewSpacePage extends Component {
         );
       case 4:
         return (
-          <FormLocationInfo
-            next={this.handleProgressInc}
-            back={this.handleProgressDec}
-          />
+          <TestForm />
+          // <FormLocationInfo
+          //   next={this.handleProgressInc}
+          //   back={this.handleProgressDec}
+          // />
         );
       default:
         return;
