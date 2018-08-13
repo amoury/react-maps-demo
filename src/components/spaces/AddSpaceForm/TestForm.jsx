@@ -1,93 +1,124 @@
 /* global google */
 
-import React from "react";
-import GoogleMap from "google-map-react";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
-} from "react-places-autocomplete";
+import React, { Component } from 'react';
+import { Segment } from 'semantic-ui-react';
+import Script from 'react-load-script';
 
-import Marker from '../../../layout/Icons/Marker';
+// var icon = {
+//   url:
+//     "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+//   size: new google.maps.Size(71, 71),
+//   origin: new google.maps.Point(0, 0),
+//   anchor: new google.maps.Point(17, 34),
+//   scaledSize: new google.maps.Size(25, 25)
+// };
 
-class TestForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { address: "" };
+class TestForm extends Component {
+  state={
+    coords: {}
   }
 
-  handleChange = address => {
-    this.setState({ address });
+  componentDidMount = () => {
+    this.getUserCoordinates();
+  }
+
+
+  handleScript = () => {
+    const { lat: userLat = 25.3506523, lng: userLng = 55.393124099999994} = this.state.coords;
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: userLat, lng: userLng },
+      zoom: 11,
+      mapTypeId: "roadmap"
+    });
+
+    const searchBox = new google.maps.places.SearchBox(document.getElementById("searchTextField"));
+
+     map.addListener("bounds_changed", function() {
+       searchBox.setBounds(map.getBounds());
+     });
+
+     var markers = [];
+
+     searchBox.addListener("places_changed", () => {
+        var places = searchBox.getPlaces();
+        if (places.length == 0) {
+          return;
+        }
+    
+        this.setState({places})
+        
+        // Clear out the old markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+    
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+
+          var icon = { url: place.icon, size: new google.maps.Size(71, 71), origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(17, 34), scaledSize: new google.maps.Size(25, 25) };
+
+          // Create a marker for each place.
+          markers.push(new google.maps.Marker({
+              map: map,
+              icon: icon,
+              title: place.name,
+              position: place.geometry.location
+            }));
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+     })
+
+
+
+
   };
 
-  handleSelect = address => {
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log("Success", latLng))
-      .catch(error => console.error("Error", error));
+
+
+  getUserCoordinates = () => {
+    if (!navigator.geolocation) return null;
+    const userCoords = {};
+    navigator.geolocation.getCurrentPosition(position => {
+      userCoords.lat = position.coords.latitude;
+      userCoords.lng = position.coords.longitude;
+    });
+    // return userCoords;
+    this.setState({coords: userCoords});
   };
+
 
   render() {
     return (
       <div>
-        <div style={{ height: "300px", width: "100%"}}>
-          <GoogleMap
-            bootstrapURLKeys={{
-              key: "AIzaSyBH8UsljlMRkbUNYkY1j4iOOem07wv9rbQ",
-              language: "en"
-            }}
-            center={[25.2048, 55.2708]}
-            zoom={9}
-          >
-          <Marker lat="25.2048" lng="55.2708" text="trial" />
-          </GoogleMap>
-        </div>
-        {/* <PlacesAutocomplete
-          value={this.state.address}
-          onChange={this.handleChange}
-          onSelect={this.handleSelect}
-        >
-          {({
-            getInputProps,
-            suggestions,
-            getSuggestionItemProps,
-            loading
-          }) => (
-            <div>
-              <input
-                {...getInputProps({
-                  placeholder: "Search Places ...",
-                  className: "location-search-input"
-                })}
-              />
-              <div className="autocomplete-dropdown-container">
-                {loading && <div>Loading...</div>}
-                {suggestions.map(suggestion => {
-                  const className = suggestion.active
-                    ? "suggestion-item--active"
-                    : "suggestion-item";
-                  // inline style for demonstration purpose
-                  const style = suggestion.active
-                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                    : { backgroundColor: "#ffffff", cursor: "pointer" };
-                  return (
-                    <div
-                      {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style
-                      })}
-                    >
-                      <span>{suggestion.description}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </PlacesAutocomplete> */}
+        <Segment.Group>
+          <Segment attached="top">
+            <input type="text" id="searchTextField" onChange={this.callback}/>
+          </Segment>
+          <Segment attached>
+            <div id="map" style={{ height: "300px", width: "100%" }}/>
+          </Segment>
+        </Segment.Group>
+        <Script
+          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6kIS7kVZhRHNLCgfBCYy7X77D9MRNKFg&libraries=places"
+          onLoad={this.handleScript}
+        />
       </div>
     );
   }
 }
-
 
 export default TestForm;
