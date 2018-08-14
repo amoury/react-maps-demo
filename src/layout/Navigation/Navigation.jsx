@@ -5,6 +5,8 @@ import { Input, Menu, Button } from "semantic-ui-react";
 class Navigation extends Component {
   state = { activeItem: "home" };
 
+
+
   handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
   render() {

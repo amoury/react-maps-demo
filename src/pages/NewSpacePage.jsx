@@ -24,24 +24,30 @@ class NewSpacePage extends Component {
         twitter: "",
         instagram: ""
       },
-      amenities: []
+      amenities: [],
+      location: {
+        address: "",
+        coordinates: {}
+      }
     }
   };
 
-  componentDidMount = () => {
+  componentDidUpdate = (prevProps) => {
+    if (this.props.location === prevProps.location) return;
     const { pathname } = this.props.location;
+    this.renderFormStep();
     const baseUrl = "/spaces/add/";
     switch (pathname) {
-      case `${baseUrl}basic-info`:
+      case `${baseUrl}location-info`:
         this.setState({ formStep: 1, progress: 10 });
         break;
-      case `${baseUrl}contact-info`:
+      case `${baseUrl}basic-info`:
         this.setState({ formStep: 2, progress: 20 });
         break;
-      case `${baseUrl}amenities`:
+      case `${baseUrl}contact-info`:
         this.setState({ formStep: 3, progress: 30 });
         break;
-      case `${baseUrl}location-info`:
+      case `${baseUrl}amenities`:
         this.setState({ formStep: 4, progress: 40 });
         break;
       default:
@@ -60,6 +66,16 @@ class NewSpacePage extends Component {
     switch (step) {
       case 1:
         return (
+          // <TestForm />
+          <FormLocationInfo
+            _space={this.state.space}
+            next={this.handleProgressInc}
+            back={this.handleProgressDec}
+            handleMapData={this.handleMapData}
+          />
+        );
+      case 2:
+        return (
           <FormBasicInfo
             next={this.handleProgressInc}
             back={this.handleProgressDec}
@@ -67,7 +83,7 @@ class NewSpacePage extends Component {
             onInputChange={this.onInputChange}
           />
         );
-      case 2:
+      case 3:
         return (
           <FormContactInfo
             next={this.handleProgressInc}
@@ -76,7 +92,7 @@ class NewSpacePage extends Component {
             onObjectChange={this.onObjectChange}
           />
         );
-      case 3:
+      case 4:
         return (
           <FormAmenitiesInfo
             next={this.handleProgressInc}
@@ -84,14 +100,6 @@ class NewSpacePage extends Component {
             amenities={amenities}
             onCheckboxChange={this.onCheckboxChange}
           />
-        );
-      case 4:
-        return (
-          <TestForm />
-          // <FormLocationInfo
-          //   next={this.handleProgressInc}
-          //   back={this.handleProgressDec}
-          // />
         );
       default:
         return;
@@ -113,6 +121,10 @@ class NewSpacePage extends Component {
       progress: this.state.progress - 10
     });
   };
+
+  handleMapData = result => {
+    this.setState({space: result});
+  }
 
   onInputChange = event => {
     const newSpace = this.state.space;
@@ -151,7 +163,9 @@ class NewSpacePage extends Component {
             />
           }
         >
-          {shouldRedirect && <Redirect to="/spaces/add/basic-info" />}
+          {shouldRedirect && <Redirect to="/spaces/add/location-info" />}
+
+          
 
           <Form onSubmit={this.onFormSubmit}>
             {this.renderFormStep(this.state.formStep)}

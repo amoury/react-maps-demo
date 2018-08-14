@@ -84,7 +84,7 @@ const FormAmenitiesInfo = props => {
         </div>
 
         <Button color="teal" icon="left arrow" labelPosition="left" content="Back" as={Link} to={`/spaces/add/contact-info`} onClick={props.back} />
-        <Button color="teal" icon="right arrow" labelPosition="right" content="Next" as={Link} to={`/spaces/add/location-info`} onClick={props.next} />
+        <Button color="teal" icon="upload" labelPosition="right" content="Submit"/>
       </Segment>
     </Segment.Group>;
 };

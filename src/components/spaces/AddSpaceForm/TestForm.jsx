@@ -1,17 +1,9 @@
 /* global google */
 
 import React, { Component } from 'react';
-import { Segment } from 'semantic-ui-react';
+import { Segment, Form } from 'semantic-ui-react';
 import Script from 'react-load-script';
 
-// var icon = {
-//   url:
-//     "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
-//   size: new google.maps.Size(71, 71),
-//   origin: new google.maps.Point(0, 0),
-//   anchor: new google.maps.Point(17, 34),
-//   scaledSize: new google.maps.Size(25, 25)
-// };
 
 class TestForm extends Component {
   state={
@@ -81,10 +73,6 @@ class TestForm extends Component {
         });
         map.fitBounds(bounds);
      })
-
-
-
-
   };
 
 
@@ -106,7 +94,10 @@ class TestForm extends Component {
       <div>
         <Segment.Group>
           <Segment attached="top">
-            <input type="text" id="searchTextField" onChange={this.callback}/>
+            <Form.Field>
+              <label>Enter the Coworking Space Name</label>
+              <input type="text" id="searchTextField" onChange={this.callback}/>
+            </Form.Field>
           </Segment>
           <Segment attached>
             <div id="map" style={{ height: "300px", width: "100%" }}/>

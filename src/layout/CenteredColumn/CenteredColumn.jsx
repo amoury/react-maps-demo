@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import { Grid } from 'semantic-ui-react';
 
+
 const CenteredColumn = ({ top, children }) => {
   return (
-    <Fragment>
+    <Fragment>  
       { top }
       <Grid>
         <Grid.Column width={3}></Grid.Column>
@@ -16,4 +17,4 @@ const CenteredColumn = ({ top, children }) => {
   )
 }
 
-export default CenteredColumn
+export default CenteredColumn;
