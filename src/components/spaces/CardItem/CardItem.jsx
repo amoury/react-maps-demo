@@ -25,7 +25,7 @@ const CardItem = (props) => {
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        { space.tags.map(tag => {
+        { space.tags && space.tags.map(tag => {
           return <Tag key={tag} tag={tag}/>
         })}
       </Card.Content>

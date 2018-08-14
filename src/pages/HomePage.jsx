@@ -1,44 +1,13 @@
 /* global google */
 import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
 import MegaMap from "../components/map/MegaMap/MegaMap";
-// import TwoColumnSticky from '../layout/TwoColumn/TwoColumnSticky';
-
-const spaces = [
-  {
-    id: "001",
-    name: "In5",
-    description:
-      "In5 is a platform that gives designers, entrepreneurs and professionals of all design, tech and media disciplines and career levels access to a comprehensive suite of benefits for promotion, talent development, business support in addition to workspace, facilities and equipment.",
-    coords: { lat: 25.0359, lng: 55.1816 },
-    mainImage: "https://source.unsplash.com/random/",
-    tags: ["Free Wifi", "Pet-friendly", "Good Music"]
-  },
-  {
-    id: "002",
-    name: "Impact Hub",
-    description:
-      "Impact Hub Dubai is one of UAE’s largest community of entrepreneurs, creatives and techies. ",
-    coords: { lat: 25.2028, lng: 55.276 },
-    mainImage: "https://source.unsplash.com/random/",
-    tags: ["Free Coffee", "Pet-friendly", "Good Music"]
-  },
-  {
-    id: "003",
-    name: "Nest",
-    description:
-      "NEST is one of the world’s first fully integrated co-working spaces within a worldwide branded hotel.",
-    coords: { lat: 25.0974, lng: 55.1744 },
-    mainImage: "https://source.unsplash.com/random/",
-    tags: ["Free Coffee", "Pet-friendly", "Good Music"]
-  }
-];
 
 class HomePage extends Component {
-  state = {
-    spaces: spaces
-  };
+  state = {};
 
   componentDidMount = () => {
     let currentCoords = this.getUserCoordinates();
@@ -65,9 +34,17 @@ class HomePage extends Component {
     console.log("Getting Distance Now");
 
     const { lat: userLat, lng: userLng } = this.state.userCoords;
-    const destinationCoords = this.state.spaces.map(
-      space => new google.maps.LatLng(space.coords.lat, space.coords.lng)
-    );
+    const destinationCoords = this.props.spaces.map(space => { 
+      return space.location.coordinates
+    });
+    // const destinationCoords = this.props.spaces.map(
+    //   space => {
+    //     console.log(space.location);
+    //     return new google.maps.LatLng(
+    //       space.location.coordinates.lat,
+    //       space.location.coordinates.lng
+    //     )
+    //   })
 
     const origin = new google.maps.LatLng(userLat, userLng);
     const matrix = new google.maps.DistanceMatrixService();
@@ -84,7 +61,8 @@ class HomePage extends Component {
 
   renderDetails = (res, status) => {
     if (status === "OK") {
-      let _spaces = [...this.state.spaces];
+      console.log(res);
+      let _spaces = [...this.props.spaces];
       let distanceData = res.rows[0].elements;
       let addressData = res.destinationAddresses;
 
@@ -94,7 +72,7 @@ class HomePage extends Component {
 
       addressData.forEach((data, index) => {
         _spaces[index].address = data;
-      })
+      });
 
       this.setState({ spaces: _spaces, gotDistance: true });
       return;
@@ -106,12 +84,16 @@ class HomePage extends Component {
     return (
       <Fragment>
         <TwoColumn
-          left={ <CardList spaces={this.state.spaces} /> }
-          right={ <MegaMap spaces={this.state.spaces} /> }
+          left={<CardList spaces={this.props.spaces} />}
+          right={<MegaMap spaces={this.props.spaces} />}
         />
       </Fragment>
     );
   }
 }
 
-export default HomePage;
+const mapStateToProps = state => ({
+  spaces: state.spaces
+});
+
+export default connect(mapStateToProps)(HomePage);

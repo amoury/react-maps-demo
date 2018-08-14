@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import GoogleMap from "google-map-react";
 
-import Marker from '../../../layout/Icons/Marker';
+import Marker from "../../../layout/Icons/Marker";
 
-class TrialMap extends Component {
+class MegaMap extends Component {
   static propTypes = {
     center: PropTypes.array,
     zoom: PropTypes.number,
@@ -22,7 +22,6 @@ class TrialMap extends Component {
     zoom: 11
   };
 
-
   _onChildMouseEnter = key => {
     console.log(key);
     // this.props.onHoverKeyChange(key);
@@ -34,22 +33,22 @@ class TrialMap extends Component {
   };
 
   render() {
-    const spaces = this.props.spaces.map(space => {
-      const { id, name, coords } = space;
+    // const spaces = this.props.spaces.map(space => {
+    //   const { id, name, location } = space;
 
-      return (
-        <Marker
-          key={id}
-          lat={coords.lat}
-          lng={coords.lng}
-          text={name}
-          hover={this.props.hoverKey === id}
-        />
-      );
-    });
+    //   return (
+    //     <Marker
+    //       key={id}
+    //       lat={location.coordinates.lat}
+    //       lng={location.coordinates.lng}
+    //       text={name}
+    //       hover={this.props.hoverKey === id}
+    //     />
+    //   );
+    // });
 
     return (
-      <div style={{ height: "100vh", width: "100%"}}>
+      <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMap
           bootstrapURLKeys={{
             key: "AIzaSyBH8UsljlMRkbUNYkY1j4iOOem07wv9rbQ",
@@ -58,11 +57,12 @@ class TrialMap extends Component {
           center={this.props.center}
           zoom={this.props.zoom}
         >
-          {spaces}
+          <Marker lat="25.2028" lng="55.276" />
+          {/* {spaces} */}
         </GoogleMap>
       </div>
     );
   }
 }
 
-export default TrialMap;
+export default MegaMap;

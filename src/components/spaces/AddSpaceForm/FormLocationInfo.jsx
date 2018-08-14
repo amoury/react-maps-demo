@@ -5,9 +5,9 @@ import Script from "react-load-script";
 import { Link } from "react-router-dom";
 
 class FormLocationInfo extends Component {
-  state={
+  state = {
     coords: {}
-  }
+  };
 
   componentDidMount = () => {
     this.getUserCoordinates();
@@ -25,7 +25,13 @@ class FormLocationInfo extends Component {
   };
 
   handleSpaceUpdates = places => {
-    const { name, international_phone_number, formatted_address, website, geometry } = places[0];
+    const {
+      name,
+      international_phone_number,
+      formatted_address,
+      website,
+      geometry
+    } = places[0];
     const _space = { ...this.props._space };
     _space.name = name;
     _space.contactInfo.contactNumber = international_phone_number;
@@ -34,7 +40,7 @@ class FormLocationInfo extends Component {
     _space.location.coordinates = geometry.location;
 
     this.props.handleMapData(_space);
-  }
+  };
 
   handleMarkers = (places, map, markers) => {
     // Clear out the old markers.
@@ -51,15 +57,23 @@ class FormLocationInfo extends Component {
         return;
       }
 
-      var icon = { url: place.icon, size: new google.maps.Size(71, 71), origin: new google.maps.Point(0, 0), anchor: new google.maps.Point(17, 34), scaledSize: new google.maps.Size(25, 25) };
+      var icon = {
+        url: place.icon,
+        size: new google.maps.Size(71, 71),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(17, 34),
+        scaledSize: new google.maps.Size(25, 25)
+      };
 
       // Create a marker for each place.
-      markers.push(new google.maps.Marker({
+      markers.push(
+        new google.maps.Marker({
           map: map,
           icon: icon,
           title: place.name,
           position: place.geometry.location
-        }));
+        })
+      );
 
       if (place.geometry.viewport) {
         // Only geocodes have viewport.
@@ -69,12 +83,19 @@ class FormLocationInfo extends Component {
       }
     });
     map.fitBounds(bounds);
-  }
+  };
 
   handleScript = () => {
     var markers = [];
-    const { lat: userLat = 25.3506523, lng: userLng = 55.393124099999994 } = this.state.coords;
-    const mapOptions = { center: { lat: userLat, lng: userLng }, zoom: 11, mapTypeId: "roadmap" };
+    const {
+      lat: userLat = 25.3506523,
+      lng: userLng = 55.393124099999994
+    } = this.state.coords;
+    const mapOptions = {
+      center: { lat: userLat, lng: userLng },
+      zoom: 11,
+      mapTypeId: "roadmap"
+    };
 
     const map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
@@ -86,13 +107,12 @@ class FormLocationInfo extends Component {
       searchBox.setBounds(map.getBounds());
     });
 
-
     searchBox.addListener("places_changed", () => {
       var places = searchBox.getPlaces();
       if (places.length == 0) return;
 
       this.handleSpaceUpdates(places);
-      this.handleMarkers(places, map, markers);      
+      this.handleMarkers(places, map, markers);
     });
   };
 
@@ -124,6 +144,9 @@ class FormLocationInfo extends Component {
               name="location"
               type="text"
               placeholder="Enter the Space title"
+              onKeyPress={e => {
+                if (e.key === "Enter") e.preventDefault();
+              }}
             />
           </Form.Field>
         </Segment>

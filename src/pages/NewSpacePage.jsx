@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from "react";
+import { connect } from 'react-redux';
 import { Redirect } from "react-router-dom";
 import { Progress, Form } from "semantic-ui-react";
+import cuid from 'cuid';
+
+import { createSpace } from '../components/spaces/spacesActions';
+
 import CenteredColumn from "../layout/CenteredColumn/CenteredColumn";
 import FormBasicInfo from "../components/spaces/AddSpaceForm/FormBasicInfo";
 import FormContactInfo from "../components/spaces/AddSpaceForm/FormContactInfo";
@@ -32,8 +37,16 @@ class NewSpacePage extends Component {
     }
   };
 
+  componentDidMount = () => {
+    this.switchSteps();
+  }
+
   componentDidUpdate = (prevProps) => {
     if (this.props.location === prevProps.location) return;
+    this.switchSteps();
+  };
+
+  switchSteps = () => {
     const { pathname } = this.props.location;
     this.renderFormStep();
     const baseUrl = "/spaces/add/";
@@ -53,7 +66,7 @@ class NewSpacePage extends Component {
       default:
         break;
     }
-  };
+  }
 
   renderFormStep = step => {
     const {
@@ -144,8 +157,12 @@ class NewSpacePage extends Component {
     this.setState({ space: _space });
   };
 
-  onFormSubmit = event => {
-    console.log(event);
+  onFormSubmit = () => {
+    const _space = {...this.state.space};
+    _space['id'] = cuid();
+
+    this.props.createSpace(_space);
+    this.props.history.push('/');
   };
 
   render() {
@@ -176,4 +193,4 @@ class NewSpacePage extends Component {
   }
 }
 
-export default NewSpacePage;
+export default connect(null, { createSpace })(NewSpacePage);
