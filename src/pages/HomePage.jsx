@@ -34,17 +34,10 @@ class HomePage extends Component {
     console.log("Getting Distance Now");
 
     const { lat: userLat, lng: userLng } = this.state.userCoords;
-    const destinationCoords = this.props.spaces.map(space => { 
+    const destinationCoords = this.props.spaces.map(space => {
       return space.location.coordinates
     });
-    // const destinationCoords = this.props.spaces.map(
-    //   space => {
-    //     console.log(space.location);
-    //     return new google.maps.LatLng(
-    //       space.location.coordinates.lat,
-    //       space.location.coordinates.lng
-    //     )
-    //   })
+   
 
     const origin = new google.maps.LatLng(userLat, userLng);
     const matrix = new google.maps.DistanceMatrixService();

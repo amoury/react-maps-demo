@@ -37,7 +37,8 @@ class FormLocationInfo extends Component {
     _space.contactInfo.contactNumber = international_phone_number;
     _space.contactInfo.siteLink = website;
     _space.location.address = formatted_address;
-    _space.location.coordinates = geometry.location;
+    _space.location.coordinates.lat = geometry.location.lat();
+    _space.location.coordinates.lng = geometry.location.lng();
 
     this.props.handleMapData(_space);
   };

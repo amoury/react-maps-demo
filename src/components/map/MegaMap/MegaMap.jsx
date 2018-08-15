@@ -22,6 +22,7 @@ class MegaMap extends Component {
     zoom: 11
   };
 
+
   _onChildMouseEnter = key => {
     console.log(key);
     // this.props.onHoverKeyChange(key);
@@ -33,20 +34,19 @@ class MegaMap extends Component {
   };
 
   render() {
-    // const spaces = this.props.spaces.map(space => {
-    //   const { id, name, location } = space;
-
-    //   return (
-    //     <Marker
-    //       key={id}
-    //       lat={location.coordinates.lat}
-    //       lng={location.coordinates.lng}
-    //       text={name}
-    //       hover={this.props.hoverKey === id}
-    //     />
-    //   );
-    // });
-
+    const spaces = this.props.spaces.map(space => {
+      const { id, name, location } = space;
+      return (
+        <Marker
+        key={id}
+        lat={location.coordinates.lat}
+        lng={location.coordinates.lng}
+        text={name}
+        hover={this.props.hoverKey === id}
+        />
+      );
+    });
+    
     return (
       <div style={{ height: "100vh", width: "100%" }}>
         <GoogleMap
@@ -56,9 +56,8 @@ class MegaMap extends Component {
           }}
           center={this.props.center}
           zoom={this.props.zoom}
-        >
-          <Marker lat="25.2028" lng="55.276" />
-          {/* {spaces} */}
+          >
+          {spaces}
         </GoogleMap>
       </div>
     );

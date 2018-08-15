@@ -160,6 +160,7 @@ class NewSpacePage extends Component {
   onFormSubmit = () => {
     const _space = {...this.state.space};
     _space['id'] = cuid();
+    _space["mainImage"] = "https://source.unsplash.com/random/";
 
     this.props.createSpace(_space);
     this.props.history.push('/');
