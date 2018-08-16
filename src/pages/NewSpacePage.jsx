@@ -1,17 +1,17 @@
 import React, { Component, Fragment } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Progress, Form } from "semantic-ui-react";
-import cuid from 'cuid';
+import cuid from "cuid";
 
-import { createSpace } from '../components/spaces/spacesActions';
+import { createSpace } from "../components/spaces/spacesActions";
 
 import CenteredColumn from "../layout/CenteredColumn/CenteredColumn";
 import FormBasicInfo from "../components/spaces/AddSpaceForm/FormBasicInfo";
 import FormContactInfo from "../components/spaces/AddSpaceForm/FormContactInfo";
 import FormAmenitiesInfo from "../components/spaces/AddSpaceForm/FormAmenitiesInfo";
 import FormLocationInfo from "../components/spaces/AddSpaceForm/FormLocationInfo";
-import TestForm from '../components/spaces/AddSpaceForm/TestForm';
+import TestForm from "../components/spaces/AddSpaceForm/TestForm";
 
 class NewSpacePage extends Component {
   state = {
@@ -33,15 +33,16 @@ class NewSpacePage extends Component {
       location: {
         address: "",
         coordinates: {}
-      }
+      },
+      spaceHighlights: []
     }
   };
 
   componentDidMount = () => {
     this.switchSteps();
-  }
+  };
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = prevProps => {
     if (this.props.location === prevProps.location) return;
     this.switchSteps();
   };
@@ -66,7 +67,7 @@ class NewSpacePage extends Component {
       default:
         break;
     }
-  }
+  };
 
   renderFormStep = step => {
     const {
@@ -74,7 +75,8 @@ class NewSpacePage extends Component {
       description,
       contactInfo,
       socialLinks,
-      amenities
+      amenities,
+      spaceHighlights
     } = this.state.space;
     switch (step) {
       case 1:
@@ -92,8 +94,9 @@ class NewSpacePage extends Component {
           <FormBasicInfo
             next={this.handleProgressInc}
             back={this.handleProgressDec}
-            space={{ name, description }}
+            space={{ name, description, spaceHighlights }}
             onInputChange={this.onInputChange}
+            onSpaceHighlightsChange={this.onSpaceHighlightsChange}
           />
         );
       case 3:
@@ -136,8 +139,8 @@ class NewSpacePage extends Component {
   };
 
   handleMapData = result => {
-    this.setState({space: result});
-  }
+    this.setState({ space: result });
+  };
 
   onInputChange = event => {
     const newSpace = this.state.space;
@@ -157,13 +160,19 @@ class NewSpacePage extends Component {
     this.setState({ space: _space });
   };
 
-  onFormSubmit = () => {
+  onSpaceHighlightsChange = highlightFields => {
     const _space = {...this.state.space};
-    _space['id'] = cuid();
+    _space.spaceHighlights = highlightFields;
+    this.setState({ space: _space });
+  };
+
+  onFormSubmit = () => {
+    const _space = { ...this.state.space };
+    _space["id"] = cuid();
     _space["mainImage"] = "https://source.unsplash.com/random/";
 
     this.props.createSpace(_space);
-    this.props.history.push('/');
+    this.props.history.push("/");
   };
 
   render() {
@@ -183,8 +192,6 @@ class NewSpacePage extends Component {
         >
           {shouldRedirect && <Redirect to="/spaces/add/location-info" />}
 
-          
-
           <Form onSubmit={this.onFormSubmit}>
             {this.renderFormStep(this.state.formStep)}
           </Form>
@@ -194,4 +201,7 @@ class NewSpacePage extends Component {
   }
 }
 
-export default connect(null, { createSpace })(NewSpacePage);
+export default connect(
+  null,
+  { createSpace }
+)(NewSpacePage);

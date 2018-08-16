@@ -1,7 +1,15 @@
 import React from "react";
 import { Segment, Header, Icon } from "semantic-ui-react";
 
-const SpaceHighlights = () => {
+const SpaceHighlights = ({highlights}) => {
+  const renderHighlights = highlights.map( highlight => {
+    return (
+      <li key={highlight.field}>
+        <Icon name="heart" color="teal" />
+        { highlight.value }
+      </li>
+    )
+  })
   return (
     <Segment>
       <Header as="h2" className="segment_header">
@@ -10,16 +18,7 @@ const SpaceHighlights = () => {
 
       <div>
         <ul style={{ listStyle: "none" }}>
-          <li>
-            <Icon name="heart" color="teal" />
-            Great Location - Since it is located in Jumeirah, it has direct
-            connectivity from the metro station.
-          </li>
-
-          <li>
-            <Icon name="heart" color="teal" />
-            High Speed Wifi - Wifi speeds reaching upto 10GB
-          </li>
+          { renderHighlights }
         </ul>
       </div>
     </Segment>

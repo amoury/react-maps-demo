@@ -7,30 +7,32 @@ import {
   Label
 } from "semantic-ui-react";
 
-const SpaceKeyDetails = () => {
+const SpaceKeyDetails = ({ name, contactInfo, location }) => {
   return (
     <div className="space_keyDetails">
-      <Header as="h1">Impact Hub</Header>
+      <Header as="h1">{name}</Header>
       <Divider />
-      <p>
+      <div style={{ display: "flex", marginBottom: "20px", justifyContent: "space-between" }}>
         <Rating icon="star" defaultRating={3} maxRating={5} />
-        <Label
-          as="a"
-          href="https://www.impacthub.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icon name="linkify" color="teal" />
-          website
-        </Label>
-      </p>
+        <p>
+          <Label
+            as="a"
+            href={ contactInfo.email }
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icon name="linkify" color="teal" />
+              website
+          </Label>
+        </p>
+      </div>
       <p>
         <Icon name="marker map alternate" color="teal" />
-        Jumeirah Village Circle, Dubai
+        { location.address }
       </p>
       <p>
         <Icon name="phone volume" color="teal" />
-        +971 4 272 1837
+        {contactInfo.contactNumber}
       </p>
     </div>
   );

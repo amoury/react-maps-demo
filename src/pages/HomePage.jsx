@@ -2,6 +2,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
+import { updateDistanceData } from '../components/spaces/spacesActions';
+
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
 import MegaMap from "../components/map/MegaMap/MegaMap";
@@ -54,20 +56,23 @@ class HomePage extends Component {
 
   renderDetails = (res, status) => {
     if (status === "OK") {
-      console.log(res);
+     
       let _spaces = [...this.props.spaces];
       let distanceData = res.rows[0].elements;
-      let addressData = res.destinationAddresses;
+      // let addressData = res.destinationAddresses;
 
       distanceData.forEach((data, index) => {
         _spaces[index].distanceData = data;
       });
 
-      addressData.forEach((data, index) => {
-        _spaces[index].address = data;
-      });
+      // addressData.forEach((data, index) => {
+      //   _spaces[index].address = data;
+      // });
 
-      this.setState({ spaces: _spaces, gotDistance: true });
+
+
+      this.setState({ gotDistance: true });
+      this.props.updateDistanceData(_spaces);
       return;
     }
     console.log(status);
@@ -89,4 +94,4 @@ const mapStateToProps = state => ({
   spaces: state.spaces
 });
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps, { updateDistanceData })(HomePage);

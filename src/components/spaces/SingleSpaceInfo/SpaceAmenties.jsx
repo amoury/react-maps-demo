@@ -4,7 +4,14 @@ import IconMeetingRoom from "../../../layout/Icons/IconMeetingRoom";
 import IconClassRoom from '../../../layout/Icons/IconClassRoom';
 import IconFlexiDesk from '../../../layout/Icons/IconFlexiDesk';
 
-const SpaceAmenties = () => {
+const SpaceAmenties = ({amenities}) => {
+  const renderAmenities = amenities.map( amenity => (
+      <li key={amenity} style = {{ width: "50%", lineHeight: "2em" }}>
+        <Icon name="check circle outline" color="teal" />
+        {amenity}
+      </li>
+  ));
+
   return (
     <Segment.Group>
       <Segment>
@@ -14,19 +21,8 @@ const SpaceAmenties = () => {
         </Header>
         <Divider />
         <div>
-          <ul style={{ listStyle: "none" }}>
-            <li>
-              <Icon name="check circle outline" color="teal" />
-              Free Printer
-            </li>
-            <li>
-              <Icon name="check circle outline" color="teal" />
-              Free Coffee
-            </li>
-            <li>
-              <Icon name="check circle outline" color="teal" />
-              Free Parking on Premises
-            </li>
+          <ul style={{ display:"flex", listStyle: "none", justifyContent:"space-between", flexWrap: "wrap" }}>
+            {renderAmenities}
           </ul>
         </div>
       </Segment>

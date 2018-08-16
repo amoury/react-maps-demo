@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Header, Segment, Icon } from "semantic-ui-react";
 
-const SpaceOverview = () => {
+const SpaceOverview = ({description}) => {
   return (
     <Grid>
       <Grid.Column width={10}>
@@ -9,15 +9,7 @@ const SpaceOverview = () => {
           Overview
         </Header>
         <p>
-          Impact Hub offers a professional working space, perfect for your
-          business needs. Whether you are a freelancer, a startup or an
-          experienced professional, here you will get the opportunity to work
-          with like minded people. Productivity is often dictated by the work
-          environment, and The Works At KRDS is aware of this aspect. Therefore,
-          you are welcomed to join a beautiful community of talented people and
-          enjoy the perks of working in a creative office. There are 40 seats
-          available in the coworking area, a conference room featuring eight
-          seats and a power backup supply in case the power runs out.
+          {description}
         </p>
       </Grid.Column>
       <Grid.Column width={6}>

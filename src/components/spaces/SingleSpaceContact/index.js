@@ -2,11 +2,11 @@ import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
 import SingleSpaceMap from './SingleSpaceMap';
 
-const SingleSpaceContact = () => {
+const SingleSpaceContact = ({space}) => {
   return (
     <Segment.Group>
-      <Segment top>
-        <SingleSpaceMap />
+      <Segment attached="top">
+        <SingleSpaceMap coordinates= {space.location.coordinates}/>
       </Segment>
       <Segment attached>
         <Header as="h2" className="segment_header">
