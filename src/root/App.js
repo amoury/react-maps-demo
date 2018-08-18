@@ -7,6 +7,7 @@ import SingleSpacePage from "../pages/SingleSpacePage";
 import NewSpacePage from "../pages/NewSpacePage";
 import NotFound from '../pages/NotFound';
 
+
 class App extends Component {
   render() {
     return (

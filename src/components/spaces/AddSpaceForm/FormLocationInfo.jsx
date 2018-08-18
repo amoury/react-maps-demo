@@ -110,7 +110,7 @@ class FormLocationInfo extends Component {
 
     searchBox.addListener("places_changed", () => {
       var places = searchBox.getPlaces();
-      if (places.length == 0) return;
+      if (places.length === 0) return;
 
       this.handleSpaceUpdates(places);
       this.handleMarkers(places, map, markers);

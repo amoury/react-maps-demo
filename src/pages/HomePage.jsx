@@ -16,7 +16,7 @@ class HomePage extends Component {
     this.setState({ userCoords: currentCoords });
 
     setTimeout(() => {
-      if (!google) return;
+      if (google === undefined) return;
       if (google && !this.state.gotDistance) return this.getUserDistance();
     }, 8000);
   };
@@ -59,17 +59,10 @@ class HomePage extends Component {
      
       let _spaces = [...this.props.spaces];
       let distanceData = res.rows[0].elements;
-      // let addressData = res.destinationAddresses;
 
       distanceData.forEach((data, index) => {
         _spaces[index].distanceData = data;
       });
-
-      // addressData.forEach((data, index) => {
-      //   _spaces[index].address = data;
-      // });
-
-
 
       this.setState({ gotDistance: true });
       this.props.updateDistanceData(_spaces);

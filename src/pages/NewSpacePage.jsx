@@ -4,14 +4,14 @@ import { Redirect } from "react-router-dom";
 import { Progress, Form } from "semantic-ui-react";
 import cuid from "cuid";
 
-import { createSpace } from "../components/spaces/spacesActions";
+import { createSpaceAsync } from "../components/spaces/spacesActions";
 
 import CenteredColumn from "../layout/CenteredColumn/CenteredColumn";
 import FormBasicInfo from "../components/spaces/AddSpaceForm/FormBasicInfo";
 import FormContactInfo from "../components/spaces/AddSpaceForm/FormContactInfo";
 import FormAmenitiesInfo from "../components/spaces/AddSpaceForm/FormAmenitiesInfo";
 import FormLocationInfo from "../components/spaces/AddSpaceForm/FormLocationInfo";
-import TestForm from "../components/spaces/AddSpaceForm/TestForm";
+
 
 class NewSpacePage extends Component {
   state = {
@@ -171,7 +171,7 @@ class NewSpacePage extends Component {
     _space["id"] = cuid();
     _space["mainImage"] = "https://source.unsplash.com/random/";
 
-    this.props.createSpace(_space);
+    this.props.createSpaceAsync(_space);
     this.props.history.push("/");
   };
 
@@ -203,5 +203,5 @@ class NewSpacePage extends Component {
 
 export default connect(
   null,
-  { createSpace }
+  { createSpaceAsync }
 )(NewSpacePage);

@@ -1,5 +1,5 @@
 import { FETCH_SPACES, CREATE_SPACE, UPDATE_DISTANCE_DATA } from './spacesActions';
-import config from '../../root/config';
+
 
 const initialState = [
   {
@@ -104,17 +104,6 @@ const spacesReducer = (state = initialState, action) => {
     case FETCH_SPACES:
       return state;
     case CREATE_SPACE:
-
-      // const createNewSpace = (state, action) => {
-      //   config.axiosInstance.post('/spaces.json', action.payload)
-      //     .then(response => {
-      //       console.log(response)
-      //     })
-      //     .catch(error => console.log(error));
-      //   return [...state, action.payload];
-      // }
-      // createNewSpace(state, action);
-      // const _state = [...state, action.payload];
       return [...state, action.payload];
     case UPDATE_DISTANCE_DATA:
       return action.payload; 
