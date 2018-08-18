@@ -104,7 +104,7 @@ const spacesReducer = (state = initialState, action) => {
     case FETCH_SPACES:
       return state;
     case CREATE_SPACE:
-      return [...state, action.payload];
+      return [...action.payload];
     case UPDATE_DISTANCE_DATA:
       return action.payload; 
     default:

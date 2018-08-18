@@ -5,26 +5,32 @@ export const FETCH_SPACES = 'FETCH_SPACES';
 export const CREATE_SPACE = 'CREATE_SPACE';
 export const UPDATE_DISTANCE_DATA = 'UPDATE_DISTANCE_DATA';
 
+export const fetchSpacesAsync = () => {
+  return dispatch => {
+    firebase.database().ref("spaces/").on("value", function(snapshot) {
+      console.log(snapshot.val());
+    });
+  }
+}
+
 export const fetchSpaces = spaces => ({
   type: FETCH_SPACES,
   payload: spaces
 });
 
-export const createSpaceAsync = space => {
+export const createSpaceAsync = spaces => {
   return dispatch => {
-    firebase.database().ref("spaces2/").set(space)
-      .then( result => {
-        debugger
-        console.log(result);
-        dispatch(createSpace(space))
+    firebase.database().ref("spaces/").set(spaces)
+      .then(() => {
+        dispatch(createSpace(spaces))
       })
       .catch (err => console.log(err));
   }
 }
 
-export const createSpace = space => ({
+export const createSpace = spaces => ({
   type: CREATE_SPACE,
-  payload: space
+  payload: spaces
 });
 
 export const updateDistanceData = data => ({

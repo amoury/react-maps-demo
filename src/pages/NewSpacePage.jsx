@@ -168,10 +168,12 @@ class NewSpacePage extends Component {
 
   onFormSubmit = () => {
     const _space = { ...this.state.space };
+  
     _space["id"] = cuid();
     _space["mainImage"] = "https://source.unsplash.com/random/";
 
-    this.props.createSpaceAsync(_space);
+    const _spaces = [...this.props.spaces].concat([{ ..._space }]);
+    this.props.createSpaceAsync(_spaces);
     this.props.history.push("/");
   };
 
@@ -201,7 +203,11 @@ class NewSpacePage extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  spaces: state.spaces
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { createSpaceAsync }
 )(NewSpacePage);
