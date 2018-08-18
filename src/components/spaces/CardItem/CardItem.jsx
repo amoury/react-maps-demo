@@ -16,7 +16,7 @@ const CardItem = (props) => {
         { space.distanceData && 
           <Card.Meta>
             <Icon name="location arrow" size="small" />{" "}
-            {space.distanceData.distance.text} away | {space.distanceData.duration.text} by car
+            {space.distanceData.distance.text !== undefined ? space.distanceData.distance.text : null } away | {space.distanceData.duration.text} by car
           </Card.Meta>
         }
         <Divider/>

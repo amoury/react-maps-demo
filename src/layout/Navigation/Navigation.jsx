@@ -19,17 +19,10 @@ class Navigation extends Component {
           to="/"
           name="home"
         />
-        <Menu.Item as={NavLink} 
-          to="/about" 
-          name="about"
-        />
         <Menu.Menu position="right">
           <Menu.Item>
             <Input icon="search" placeholder="Search..." />
           </Menu.Item>
-          <Menu.Item
-            name="logout"
-          />
           <Button as={Link} to="spaces/add" color="teal">
             List your space
           </Button>

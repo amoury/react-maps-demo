@@ -17,7 +17,7 @@ const SpaceKeyDetails = ({ name, contactInfo, location }) => {
         <p>
           <Label
             as="a"
-            href={ contactInfo.email }
+            href={ contactInfo.siteLink }
             target="_blank"
             rel="noopener noreferrer"
           >

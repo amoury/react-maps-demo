@@ -5,6 +5,7 @@ import SpaceOverview from "./SpaceOverview";
 import SpaceAmenties from "./SpaceAmenties";
 
 const SingleSpaceInfo = ({ space }) => {
+  if(!space) return;
   return (
     <div>
       <SpaceKeyDetails

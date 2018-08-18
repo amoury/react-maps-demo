@@ -118,12 +118,8 @@ class FormLocationInfo extends Component {
   };
 
   render() {
-    return (
-      <Segment.Group>
-        <Script
-          url="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6kIS7kVZhRHNLCgfBCYy7X77D9MRNKFg&libraries=places"
-          onLoad={this.handleScript}
-        />
+    return <Segment.Group>
+        <Script url="https://maps.googleapis.com/maps/api/js?key=AIzaSyDODyKp24hlBZzDZaFwK3zbI7gBTA25AfE&libraries=places" onLoad={this.handleScript} />
         <Segment attached="top">
           <Header as="h2" className="segment_header" color="teal">
             Location Information
@@ -134,21 +130,16 @@ class FormLocationInfo extends Component {
             Let's locate your space on the map
           </Header>
           <p>
-            Type in the space name into the field below and select the coworking
-            space from the dropdown menu. We will try and get as much info as
-            possible from google, so the whole process will take less time.
+            Type in the space name into the field below and select the
+            coworking space from the dropdown menu. We will try and get as
+            much info as possible from google, so the whole process will
+            take less time.
           </p>
           <Form.Field>
             <label>Name of the Space</label>
-            <input
-              id="searchTextField"
-              name="location"
-              type="text"
-              placeholder="Enter the Space title"
-              onKeyPress={e => {
+            <input id="searchTextField" name="location" type="text" placeholder="Enter the Space title" onKeyPress={e => {
                 if (e.key === "Enter") e.preventDefault();
-              }}
-            />
+              }} />
           </Form.Field>
         </Segment>
 
@@ -157,18 +148,9 @@ class FormLocationInfo extends Component {
         </Segment>
 
         <Segment attached="bottom">
-          <Button
-            color="teal"
-            icon="right arrow"
-            labelPosition="right"
-            content="Next"
-            as={Link}
-            to={`/spaces/add/basic-info`}
-            onClick={this.props.next}
-          />
+          <Button color="teal" icon="right arrow" labelPosition="right" content="Next" as={Link} to={`/spaces/add/basic-info`} onClick={this.props.next} />
         </Segment>
-      </Segment.Group>
-    );
+      </Segment.Group>;
   }
 }
 
