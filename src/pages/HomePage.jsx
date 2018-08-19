@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
-import { updateDistanceData, fetchSpacesAsync } from "../components/spaces/spacesActions";
+import { updateDistanceData } from "../components/spaces/spacesActions";
 
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
@@ -12,7 +12,6 @@ class HomePage extends Component {
   state = {};
 
   componentDidMount = () => {
-    this.props.fetchSpacesAsync();
     let currentCoords = this.getUserCoordinates();
     this.setState({ userCoords: currentCoords });
 
@@ -88,4 +87,4 @@ const mapStateToProps = state => ({
   spaces: state.spaces
 });
 
-export default connect(mapStateToProps, { updateDistanceData, fetchSpacesAsync })(HomePage);
+export default connect(mapStateToProps, { updateDistanceData })(HomePage);

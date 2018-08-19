@@ -6,10 +6,12 @@ import Jumbotron from "../layout/Jumbotron/Jumbotron";
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import SingleSpaceInfo from "../components/spaces/SingleSpaceInfo";
 import SingleSpaceContact from "../components/spaces/SingleSpaceContact";
+import Loader from '../layout/Loader/Loader';
 
 class SingleSpacePage extends Component {
   render() {
     const { match, spaces } = this.props;
+    if(!spaces) return <Loader/>;
     const space = spaces.filter( space => match.params.id === space.id)[0];
 
     return (

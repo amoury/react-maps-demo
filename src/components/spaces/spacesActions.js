@@ -7,8 +7,8 @@ export const UPDATE_DISTANCE_DATA = 'UPDATE_DISTANCE_DATA';
 
 export const fetchSpacesAsync = () => {
   return dispatch => {
-    firebase.database().ref("spaces/").on("value", function(snapshot) {
-      console.log(snapshot.val());
+    firebase.database().ref("spaces/").on("value", function(data) {
+      dispatch(fetchSpaces(data.val()));
     });
   }
 }

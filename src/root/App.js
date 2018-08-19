@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import HomePage from "../pages/HomePage";
 import Navigation from "../layout/Navigation/Navigation";
@@ -7,8 +8,15 @@ import SingleSpacePage from "../pages/SingleSpacePage";
 import NewSpacePage from "../pages/NewSpacePage";
 import NotFound from '../pages/NotFound';
 
+import { fetchSpacesAsync } from '../components/spaces/spacesActions';
+
 
 class App extends Component {
+
+  componentDidMount = () => {
+    this.props.fetchSpacesAsync();
+  }
+
   render() {
     return (
       <div className="App">
@@ -24,4 +32,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { fetchSpacesAsync })(App);

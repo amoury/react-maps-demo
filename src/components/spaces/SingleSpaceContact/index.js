@@ -1,8 +1,10 @@
 import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
 import SingleSpaceMap from './SingleSpaceMap';
+import Loader from '../../../layout/Loader/Loader';
 
 const SingleSpaceContact = ({space}) => {
+  if(!space) return <div><Loader/></div>;
   return (
     <Segment.Group>
       <Segment attached="top">
