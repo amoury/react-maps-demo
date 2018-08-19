@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
 import "firebase/database";
+import { actions as toastrActions } from 'react-redux-toastr';
+
 
 export const FETCH_SPACES = 'FETCH_SPACES';
 export const CREATE_SPACE = 'CREATE_SPACE';

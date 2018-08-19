@@ -2,11 +2,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
+
 import { updateDistanceData } from "../components/spaces/spacesActions";
 
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
 import MegaMap from "../components/map/MegaMap/MegaMap";
+
 
 class HomePage extends Component {
   state = {};
@@ -86,5 +88,7 @@ class HomePage extends Component {
 const mapStateToProps = state => ({
   spaces: state.spaces
 });
+
+
 
 export default connect(mapStateToProps, { updateDistanceData })(HomePage);

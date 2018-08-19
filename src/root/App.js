@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
+import ReduxToastr from 'react-redux-toastr';
 
 import HomePage from "../pages/HomePage";
 import Navigation from "../layout/Navigation/Navigation";
@@ -9,6 +10,7 @@ import NewSpacePage from "../pages/NewSpacePage";
 import NotFound from '../pages/NotFound';
 
 import { fetchSpacesAsync } from '../components/spaces/spacesActions';
+
 
 
 class App extends Component {
@@ -28,6 +30,7 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route component={NotFound} />
         </Switch>
+        <ReduxToastr />
       </div>
     );
   }
