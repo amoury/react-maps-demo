@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import HomePage from "../pages/HomePage";
@@ -22,9 +22,10 @@ class App extends Component {
       <div className="App">
         <Navigation />
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <Route path="/spaces/:id/edit" component={NewSpacePage} />
           <Route path="/spaces/add" component={NewSpacePage} />
           <Route path="/spaces/:id" component={SingleSpacePage} />
+          <Route exact path="/" component={HomePage} />
           <Route component={NotFound} />
         </Switch>
       </div>
@@ -32,4 +33,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, { fetchSpacesAsync })(App);
+export default withRouter(connect(null, { fetchSpacesAsync })(App));

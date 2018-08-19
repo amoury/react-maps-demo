@@ -7,8 +7,17 @@ import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import SingleSpaceInfo from "../components/spaces/SingleSpaceInfo";
 import SingleSpaceContact from "../components/spaces/SingleSpaceContact";
 import Loader from '../layout/Loader/Loader';
+import { updateSpacesAsync } from "../components/spaces/spacesActions";
 
 class SingleSpacePage extends Component {
+  handleSpaceDelete = spaceId => {
+    const _spaces = [...this.props.spaces];
+    const updatedSpaces = _spaces.filter( space => space.id !== spaceId );
+    this.props.updateSpacesAsync(updatedSpaces);
+    this.props.history.push('/');
+  }
+
+
   render() {
     const { match, spaces } = this.props;
     if(!spaces) return <Loader/>;
@@ -20,7 +29,7 @@ class SingleSpacePage extends Component {
         <Container>
           <TwoColumn
             left={<SingleSpaceInfo space={space} />}
-            right={<SingleSpaceContact space={space}/>}
+            right={<SingleSpaceContact space={space} handleDelete={this.handleSpaceDelete}/>}
           />
         </Container>
       </div>
@@ -32,4 +41,4 @@ const mapStateToProps = state => ({
   spaces: state.spaces
 })
 
-export default connect(mapStateToProps)(SingleSpacePage);
+export default connect(mapStateToProps, { updateSpacesAsync })(SingleSpacePage);

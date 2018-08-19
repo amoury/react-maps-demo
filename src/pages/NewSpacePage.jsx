@@ -168,6 +168,13 @@ class NewSpacePage extends Component {
 
   onFormSubmit = () => {
     const _space = { ...this.state.space };
+    if (_space.id) {
+      const _spaces = this.props.spaces.filter( space => space.id !== _space.id);
+      const updatedSpaces = [..._spaces].concat([{ ..._space }]);
+      this.props.createSpaceAsync(updatedSpaces);
+      this.props.history.push("/");
+      return;
+    }
   
     _space["id"] = cuid();
     _space["mainImage"] = "https://source.unsplash.com/random/";
@@ -177,22 +184,37 @@ class NewSpacePage extends Component {
     this.props.history.push("/");
   };
 
-  render() {
-    const { match, location } = this.props;
-    let shouldRedirect = match.url === location.pathname;
+  handleSpaceEdit = (currentSpace) => {
+    if(!currentSpace.id) return;
+    this.setState({ space: currentSpace })
+    this.props.history.push('/spaces/add/basic-info');
+  }
 
+  render() {
+    const { match, location, spaces } = this.props;
+    
+    if ( match.params.id ) {
+      const newObj = spaces.filter(space => space.id === match.params.id)[0];
+      this.handleSpaceEdit(newObj);
+      return null;
+    }
+    
+    let shouldRedirect = match.url === location.pathname;
+    
     return (
       <Fragment>
         <CenteredColumn
           top={
             <Progress
-              className="form_progress_bar"
-              percent={this.state.progress}
-              color="teal"
+            className="form_progress_bar"
+            percent={this.state.progress}
+            color="teal"
             />
           }
-        >
+          >
+          
           {shouldRedirect && <Redirect to="/spaces/add/location-info" />}
+          
 
           <Form onSubmit={this.onFormSubmit}>
             {this.renderFormStep(this.state.formStep)}

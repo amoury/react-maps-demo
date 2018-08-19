@@ -2,7 +2,7 @@ import React from "react";
 import { Segment, Header, Icon } from "semantic-ui-react";
 
 const SpaceHighlights = ({highlights}) => {
-  if(highlights && highlights.length <= 0) return;
+  if(highlights === undefined) return null;
   const renderHighlights = highlights.map( highlight => {
     return (
       <li key={highlight.field}>

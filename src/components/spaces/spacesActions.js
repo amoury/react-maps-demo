@@ -3,7 +3,9 @@ import "firebase/database";
 
 export const FETCH_SPACES = 'FETCH_SPACES';
 export const CREATE_SPACE = 'CREATE_SPACE';
+export const DELETE_SPACE = 'DELETE_SPACE';
 export const UPDATE_DISTANCE_DATA = 'UPDATE_DISTANCE_DATA';
+
 
 export const fetchSpacesAsync = () => {
   return dispatch => {
@@ -36,4 +38,14 @@ export const createSpace = spaces => ({
 export const updateDistanceData = data => ({
   type: UPDATE_DISTANCE_DATA,
   payload: data
-})
+});
+
+export const updateSpacesAsync = spaces => {
+  return dispatch => {
+    firebase.database().ref("spaces/").set(spaces)
+      .then(() => {
+        console.log('Database updated successfully');
+      })
+      .catch (err => console.log(err));
+  }
+}

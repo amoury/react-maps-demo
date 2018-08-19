@@ -5,6 +5,7 @@ import IconClassRoom from '../../../layout/Icons/IconClassRoom';
 import IconFlexiDesk from '../../../layout/Icons/IconFlexiDesk';
 
 const SpaceAmenties = ({amenities}) => {
+  if (amenities === undefined || amenities.length <= 0) return null;
   const renderAmenities = amenities.map( amenity => (
       <li key={amenity} style = {{ width: "50%", lineHeight: "2em" }}>
         <Icon name="check circle outline" color="teal" />
