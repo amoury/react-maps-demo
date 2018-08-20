@@ -12,28 +12,33 @@ const CardItem = props => {
       <Image src={spaceImg} />
       <Card.Content>
         <Card.Header>{space.name}</Card.Header>
-        {space.distanceData !== undefined && (
+        {space.distanceData && space.distanceData.status === "OK" ? (
           <Card.Meta>
             <Icon name="location arrow" size="small" />{" "}
             {space.distanceData.distance.text} away |{" "}
             {space.distanceData.duration.text} by car
           </Card.Meta>
+        ) : (
+          <Card.Meta>
+            <Icon name="plane" size="small" />{" "}
+            Take the plane to reach here
+          </Card.Meta>
         )}
         <Divider />
         <Card.Description>
-          { space.contactInfo.contactNumber.length >= 1 && 
+          {space.contactInfo.contactNumber.length >= 1 && (
             <p>
               <Icon name="phone volume" color="teal" />
               {space.contactInfo.contactNumber}
             </p>
-          }
-          { space.location.address && 
-             <p>
+          )}
+          {space.location.address && (
+            <p>
               <Icon name="marker map alternate" color="teal" />
               {space.location.address}
             </p>
-          }
-        </Card.Description> 
+          )}
+        </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <Button as={Link} to={`/spaces/${space.id}`}>

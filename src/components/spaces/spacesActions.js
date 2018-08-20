@@ -27,6 +27,11 @@ export const createSpaceAsync = spaces => {
     firebase.database().ref("spaces/").set(spaces)
       .then(() => {
         dispatch(createSpace(spaces))
+        dispatch(toastrActions.add({
+          type: 'success',
+          title: 'Success',
+          message: 'Space added successfully'
+        }))
       })
       .catch (err => console.log(err));
   }
@@ -49,5 +54,17 @@ export const updateSpacesAsync = spaces => {
         console.log('Database updated successfully');
       })
       .catch (err => console.log(err));
+  }
+}
+
+export const sortByDistance = (spaces) => {
+  return (dispatch) => {
+    const withDistanceData = spaces.filter( space => space.distanceData.status === "OK");
+    const withoutDistanceData = spaces.filter( space => space.distanceData.status !== "OK");
+    withDistanceData.sort( (a, b) => {
+      return a.distanceData.distance.value - b.distanceData.distance.value;
+    });
+    const sortedSpaces = withDistanceData.concat(withoutDistanceData);
+    dispatch(fetchSpaces(sortedSpaces));
   }
 }

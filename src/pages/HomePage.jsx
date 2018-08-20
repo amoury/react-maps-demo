@@ -3,7 +3,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 
 
-import { updateDistanceData } from "../components/spaces/spacesActions";
+import { updateDistanceData, sortByDistance } from "../components/spaces/spacesActions";
 
 import TwoColumn from "../layout/TwoColumn/TwoColumn";
 import CardList from "../components/spaces/CardList/CardList";
@@ -68,6 +68,7 @@ class HomePage extends Component {
 
       this.setState({ gotDistance: true });
       this.props.updateDistanceData(_spaces);
+      this.props.sortByDistance(_spaces);
       return;
     }
     console.log(status);
@@ -78,7 +79,7 @@ class HomePage extends Component {
       <Fragment>
         <TwoColumn
           left={<CardList spaces={this.props.spaces} />}
-          right={<MegaMap spaces={this.props.spaces} />}
+          right={<MegaMap spaces={this.props.spaces} userCoords={this.state.userCoords}/>}
         />
       </Fragment>
     );
@@ -91,4 +92,4 @@ const mapStateToProps = state => ({
 
 
 
-export default connect(mapStateToProps, { updateDistanceData })(HomePage);
+export default connect(mapStateToProps, { updateDistanceData, sortByDistance })(HomePage);

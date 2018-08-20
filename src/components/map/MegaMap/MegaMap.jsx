@@ -34,6 +34,7 @@ class MegaMap extends Component {
   };
 
   render() {
+    const { userCoords } = this.props;
     const spaces = this.props.spaces.map(space => {
       const { id, name, location } = space;
       return (
@@ -54,7 +55,7 @@ class MegaMap extends Component {
             key: "AIzaSyBH8UsljlMRkbUNYkY1j4iOOem07wv9rbQ",
             language: "en"
           }}
-          center={this.props.center}
+          center={ userCoords ? [userCoords.lat, userCoords.lng] : this.props.center}
           zoom={this.props.zoom}
           >
           {spaces}
